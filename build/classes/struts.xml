@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<!-- package里元素必须按照一定的顺序排列：result-types>interceptors>default-interceptor-ref>default-action-ref>default-class-ref>global-results>global-exception-mappings>action*(就是所有的action放到最后)  -->
+
+<struts> 
+   
+  <!-- 动态方法调用，官方不建议使用动态方法调用，因为不安全 -->
+  <!--  <constant name="struts.enable.DynamicMethodInvocation" value="true" />   -->
+
+  <package name="manage" namespace="/" extends="struts-default">
+    	<!-- 配置拦截器 -->
+  	<interceptors>
+  	    <interceptor name="myInterceptor" class="hsx.com.interceptor.MyInterceptor"></interceptor>
+  	    <interceptor name="loginInterceptor" class="hsx.com.interceptor.LoginInterceptor"></interceptor>
+  	</interceptors>
+  	
+  	<action name="hello3" class="hsx.com.action.HelloAction3">  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	<!-- 引用Action之前，调用拦截器 -->
+  	    <interceptor-ref name="myInterceptor"></interceptor-ref> <!-- 最外层，即先进入 -->
+  	    <interceptor-ref name="defaultStack"></interceptor-ref>  <!-- 最里层，即后进入 -->
+  	</action> 
+  	
+  	<action name="user" class="hsx.com.action.UserAction4">  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	    <result name="error">${pageContext.request.contextPath}/error.jsp</result>
+  	<!-- 引用Action之前，调用拦截器 -->
+  	    
+  	    <interceptor-ref name="defaultStack"></interceptor-ref>  <!-- 最里层，即后进入 -->
+  	</action> 
+  	
+  	<action name="gg" class="hsx.com.action.HelloAction4">  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	    <result name="error">${pageContext.request.contextPath}/error.jsp</result>
+  	<!-- 引用Action之前，调用拦截器 -->
+  	    <interceptor-ref name="loginInterceptor"></interceptor-ref> <!-- 最外层，即先进入 -->
+  	    <interceptor-ref name="defaultStack"></interceptor-ref>  <!-- 最里层，即后进入 -->
+  	</action> 
+  	 </package>
+  </struts>
+  
+  
+<!--   <package name="manage2" namespace="/" extends="struts-default"> 通配符 
+        
+    <action name="Student_*" class="hsx.com.action.StudentAction2"  method="{1}">   -*是通配符，可以匹配任何东西。method="{1}"表示取得第一个通配符
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action>
+  
+  	<action name="Grade_*" class="hsx.com.action.GradeAction"  method="{1}">   -*是通配符，可以匹配任何东西。method="{1}"表示取得第一个通配符
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action> 
+  	
+   	<global-results> 全局result配置，当在package找不到相应的result响应的时候，执行全局result配置
+  	    <result name="error">${pageContext.request.contextPath}/error.jsp</result>
+  	</global-results> 
+  	
+    <action name="*_*" class="hsx.com.action.{1}Action" method="{2}">
+  	    <result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action> 
+  	
+     <action name="student" class="hsx.com.action.StudentAction2">
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action> 
+  	
+  	<action name="grade" class="hsx.com.action.GradeAction">  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action>
+
+  	<action name="hello" class="hsx.com.action.HelloAction">  
+  		<result name="success" type="dispatcher">${pageContext.request.contextPath}/success.jsp</result> 默认转发
+  		<result name="r" type="redirect">${pageContext.request.contextPath}/success.jsp</result>  重定向
+  	    <result name="c" type="chain">hello2</result>  chain链条,相当于内部转发到一个新的action
+  	    <result name="ra" type="redirectAction">hello2</result>  redirectAction重定向到action
+  	</action> 
+  	
+  	<action name="hello2" class="hsx.com.action.HelloAction2">  
+  		<result name="success" type="dispatcher">${pageContext.request.contextPath}/success.jsp</result>
+  	</action>  	 	
+  </package>-->
+
+<!-- <struts>         分模块配置方法<include file=""></include>
+ <include file="cheliang.xml"></include>
+ <include file="zichan.xml"></include>
+</struts> -->
+
+<!-- <struts>
+	
+  <package name="helloWorld" extends="struts-default">            package配置，name包名，extends继承，namespace包命名空间，abstract抽象包
+  
+  	<action name="hello" class="hsx.com.action.HelloWorldAction2">   action配置，name action名，class处理类，method方法
+  		<result name="success">helloWorld.jsp</result>
+  	</action>
+  	
+  	<action name="user" class="hsx.com.action.UserAction">
+  	    <result name="success">success.jsp</result>
+  	    <result name="error">error.jsp</result>
+  	</action>
+  	
+  	<action name="user2" class="hsx.com.action.UserAction2">
+  	    <result name="success">success.jsp</result>
+  	    <result name="error">error.jsp</result>
+  	</action>
+  	
+  	<action name="user3" class="hsx.com.action.UserAction3">
+  	    <result name="success">success.jsp</result>
+  	    <result name="error">error.jsp</result>
+  	</action>
+  	
+  	<action name="hobby" class="hsx.com.action.HobbyAction">
+  	    <result name="success">success.jsp</result>
+  	</action>
+  
+  	<action name="student" class="hsx.com.action.StudentAction">
+  	    <result name="success">success.jsp</result>
+  	</action>
+  	
+  </package>
+
+  <package name="foreground" namespace="/fore" extends="struts-default">        
+  	<action name="studentList" class="hsx.com.action.ForeStudent">  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action>
+  </package>
+  
+  <package name="background" namespace="/back" extends="struts-default">        
+  	<action name="studentList" class="hsx.com.action.BackStudent" method="show">   method指定class执行的方法，如果不指定特定的方法，将执行默认的方法  
+  		<result name="success">${pageContext.request.contextPath}/success.jsp</result>
+  	</action>
+  </package>
+  
+  <package name="infoFilter" abstract="true"></package>
+</struts> 
+ -->

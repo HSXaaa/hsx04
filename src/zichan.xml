@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts> <!-- 分模块配置方法<include file=""></include> -->
+  <package name="zichan" namespace="/zichan" extends="struts-default">
+    <action name="zichan" class="hsx.com.action.ZiChanAction">
+      <result name="success">${pageContext.request.contextPath}/success.jsp</result>
+    </action>
+  </package> 
+</struts>

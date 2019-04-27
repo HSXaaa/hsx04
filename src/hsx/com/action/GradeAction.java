@@ -1,0 +1,48 @@
+package hsx.com.action;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class GradeAction extends ActionSupport{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String name;
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String list()throws Exception{
+		System.out.println("班级查找");
+		name="班级查找";
+		return SUCCESS;
+	}
+	
+	public String add()throws Exception{
+		System.out.println("班级添加");
+		name="班级添加";
+		return SUCCESS;
+	}
+	
+	public String update()throws Exception{
+		System.out.println("班级修改");
+		name="班级修改";
+		return SUCCESS;
+	}
+	
+	public String delete()throws Exception{
+		System.out.println("班级删除");
+		name="班级删除";
+		return SUCCESS;
+	}
+
+	
+}
